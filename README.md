@@ -5,14 +5,14 @@ which DLCs it requires.
 
 This is a sample project for [TruckLib](https://github.com/sk-zk/TruckLib).
 
-Supports map version 876.
+Supports map version 880.
 
 ## Usage
 `DlcCheck mbd_path game_root_path [output_path]`
 
 **mbd_path**: Path to the .mbd file of your map.  
 **game_root_path**: Path to your ETS2 / ATS install folder.  
-**output_path** (optional): Path of the output file. Writes to console otherwise.
+**output_path** (optional): Path of the output file. Writes to console if not set.
 
 ### Example
 
