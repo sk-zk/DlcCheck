@@ -187,7 +187,8 @@ namespace DlcCheck
             // print list of .scs files used
             foreach (var dlc in sortedOrigins)
             {
-                if (dlc.Value.Count == 0) continue;
+                if (dlc.Value.Count == 0)
+                    continue;
                 sb.AppendLine("* " + dlc.Key);
             }
             sb.AppendLine();
@@ -196,7 +197,8 @@ namespace DlcCheck
             sb.AppendLine("Detailed list of all DLC assets:\n");
             foreach (var dlc in sortedOrigins)
             {
-                if (dlc.Value.Count == 0) continue;
+                if (dlc.Value.Count == 0)
+                    continue;
 
                 sb.AppendLine($"[ {dlc.Key} ]");
                 foreach (var usedAsset in dlc.Value)
@@ -207,13 +209,9 @@ namespace DlcCheck
             }
 
             if (string.IsNullOrEmpty(outputFile))
-            {
                 Console.Write(sb);
-            }
             else
-            {
                 File.WriteAllText(outputFile, sb.ToString());
-            }
         }
 
         private void AssignOriginOfAllUnits()
@@ -244,27 +242,25 @@ namespace DlcCheck
 
         }
 
-        private void AssignOriginOfUnitsInDirectory(string scsFilename, HashFsReader h, 
+        private void AssignOriginOfUnitsInDirectory(string scsFilename, HashFsReader h,
             string dir, bool recursive = false)
         {
-            var files = h.GetDirectoryListing(dir, true, false);
-            foreach (var file in files)
+            var (Subdirs, Files) = h.GetDirectoryListing(dir, false, true);
+
+            if (recursive)
             {
-                if (file.EndsWith("/") && recursive)
-                {
+                foreach (var file in Subdirs)
                     AssignOriginOfUnitsInDirectory(scsFilename, h, file, true);
-                }
-                else if(file.EndsWith(".sii") || file.EndsWith(".sui"))
-                {
-                    AssignOriginOfUnitsInDef(scsFilename, h, file);
-                }
             }
+
+            foreach (var file in Files)
+                AssignOriginOfUnitsInDef(scsFilename, h, file);
         }
 
         private void AssignOriginOfUnitsInDef(string scsFilename, HashFsReader h, string def)
         {
-            var content = encoding.GetString(h.ExtractEntry(def));
-            var sii = SiiFile.FromString(content);
+            var content = encoding.GetString(h.Extract(def));
+            var sii = SiiFile.Load(content);
             foreach (var unit in sii.Units)
             {
                 // ignore nameless units

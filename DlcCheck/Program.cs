@@ -1,9 +1,5 @@
 ﻿using System;
 using System.IO;
-using TruckLib.ScsMap;
-using TruckLib;
-using TruckLib.HashFs;
-using System.Collections.Generic;
 
 namespace DlcCheck
 {
