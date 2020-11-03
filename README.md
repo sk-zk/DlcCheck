@@ -5,7 +5,7 @@ which DLCs it requires.
 
 This is a sample project for [TruckLib](https://github.com/sk-zk/TruckLib).
 
-Supports map version 880.
+Supports map version 884.
 
 ## Usage
 `DlcCheck mbd_path game_root_path [output_path]`
